@@ -48,4 +48,5 @@ int	get_num_cmds(p_cmd *cmd);
 void	excute_multi(p_cmd *cmd, int index, int max_index, char **envp, int p[2][2]);
 void	red_IO(int index, int max_index, int p[2][2]);
 void	close_both(int p[2][2]);
+void	make_pipes(int p[2][2], int index, int max_index);
 #endif

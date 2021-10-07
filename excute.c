@@ -67,14 +67,7 @@ void	exc_err(char *cmd)
 
 void	red_IO(int index, int max_index, int p[2][2])
 {
-	if (index % 2)
-	{
-		if (index > 1)
-		{
-			close(p[1][IN]);
-			close(p[1][OUT]);
-			pipe(p[1]);
-		}
+/*	if (index % 2){
 		dup2(p[0][IN], IN);
 		if (index != max_index)
 			dup2(p[1][OUT], OUT);
@@ -83,14 +76,27 @@ void	red_IO(int index, int max_index, int p[2][2])
 			dup2(p[1][IN], IN);
 		else if (index)
 		{
-			close(p[0][IN]);
-			close(p[0][OUT]);
-			pipe(p[0]);
+			dup2(p[1][IN], IN);
+			dup2(p[0][OUT], OUT);
+		}else
+			dup2(p[0][OUT], OUT);
+	}*/
+	if (index % 2)
+	{
+		dup2(p[0][IN], IN);
+		if (index != max_index)
+			dup2(p[1][OUT], OUT);
+	}else {
+		if (index == max_index)
+			dup2(p[1][IN], IN);
+		else if (index)
+		{
 			dup2(p[1][IN], IN);
 			dup2(p[0][OUT], OUT);
 		}else{
 			dup2(p[0][OUT], OUT);
 		}
+
 	}
 	close_both(p);
 }

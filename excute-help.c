@@ -17,6 +17,7 @@ void	excute_multi(p_cmd *cmd, int index, int max_index, char **envp, int p[2][2]
 
 	if (cmd)
 	{
+		make_pipes(p, index, max_index);
 		id = fork();
 		if (id == 0)
 		{
@@ -28,4 +29,30 @@ void	excute_multi(p_cmd *cmd, int index, int max_index, char **envp, int p[2][2]
 		waitpid(id, 0, 0);
 	}
 	close_both(p);
+}
+
+void	make_pipes(int p[2][2], int index, int max_index)
+{
+/*	if (index)
+	{
+		if (index % 2)
+		{
+			close(p[1][IN]);
+			close(p[1][OUT]);
+			if (index != max_index)
+				pipe(p[1]);
+		}else{
+			close(p[0][IN]);
+			close(p[0][OUT]);
+			if (index != max_index)
+				pipe(p[0]);
+		}
+	}*/
+	if (index)
+	{
+		close(p[index % 2][IN]);
+		close(p[index % 2][OUT]);
+		if (index != max_index)
+			pipe(p[index % 2]);
+	}
 }
